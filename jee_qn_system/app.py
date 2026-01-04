@@ -7,10 +7,11 @@ app.secret_key = 'supersecretkey'  # Needed for session management
 # Database Connection Configuration
 # CHANGE THESE VALUES TO MATCH YOUR MYSQL SETUP
 db_config = {
-    'host': 'localhost',
+    'host': 'caboose.proxy.rlwy.net',
+    'port': 39919,
     'user': 'root',      # Default MySQL username
-    'password': 'Sneha@28',      # Default MySQL password (often empty or 'password')
-    'database': 'jee_db'
+    'password': 'mPYlkSlsILgICwEjuQZIDAlQDdwurJfI',      # Default MySQL password (often empty or 'password')
+    'database': 'railway'
 }
 
 def get_db_connection():
