@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Questions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
+            const resultDiv = document.getElementById(`result-${questionId}`);
+            const submitBtn = document.getElementById(`submit-${questionId}`);
+            const answerDiv = document.getElementById(`answer-${questionId}`);
+            
+            if (!selectedOption) {
+                alert('Please select an answer first!');
+                return;
+            }
+            
+            const userAnswer = selectedOption.value;
+            const isCorrect = userAnswer === correctAnswer;
+            
+            // Show result
+            resultDiv.style.display = 'block';
+            if (isCorrect) {
+                resultDiv.className = 'result-box correct';
+                resultDiv.innerHTML = '✓ Correct! Well done!';
+            } else {
+                resultDiv.className = 'result-box incorrect';
+                resultDiv.innerHTML = `✗ Incorrect. The correct answer is Option ${correctAnswer}`;
+            }
+            
+            // Disable further changes
+            const options = document.querySelectorAll(`input[name="q${questionId}"]`);
+            options.forEach(option => option.disabled = true);
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Answered';
+            
+            // Hide the old show answer button
+            answerDiv.style.display = 'none';
+        }
+        
+        function resetAnswer(questionId) {
+            const options = document.querySelectorAll(`input[name="q${questionId}"]`);
+            options.forEach(option => {
+                option.disabled = false;
+                option.checked = false;
+            });
+            
+            const resultDiv = document.getElementById(`result-${questionId}`);
+            const submitBtn = document.getElementById(`submit-${questionId}`);
+            
+            resultDiv.style.display = 'none';
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit Answer';
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById('answer-' + id);
+            var btn = document.getElementById('btn-' + id);
+            if (answerDiv.style.display === 'none') {
+                answerDiv.style.display = 'block';
+                btn.innerText = 'Hide Answer';
+            } else {
+                answerDiv.style.display = 'none';
+                btn.innerText = 'Show Answer';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Practice: {% if subject %}{{ subject }}{% else %}All Questions{% endif %}</h1>
+        <div class="user-info">
+            <a href="{{ url_for('student_dashboard') }}" class="btn-small">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="container full-width">
+        {% for q in questions %}
+        <div class="question-card">
+            <div class="q-header">
+                <span class="badge {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                <span class="subject-tag">{{ q.subject }} - {{ q.chapter }}</span>
+            </div>
+            <div class="q-body">
+                <p class="q-text"><strong>Q{{ loop.index }}:</strong> {{ q.question_text }}</p>
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q{{ q.id }}" value="A" class="option-radio">
+                        <span class="option-text">(A) {{ q.option_a }}</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q{{ q.id }}" value="B" class="option-radio">
+                        <span class="option-text">(B) {{ q.option_b }}</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q{{ q.id }}" value="C" class="option-radio">
+                        <span class="option-text">(C) {{ q.option_c }}</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q{{ q.id }}" value="D" class="option-radio">
+                        <span class="option-text">(D) {{ q.option_d }}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="q-footer">
+                <button id="submit-{{ q.id }}" onclick="checkAnswer('{{ q.id }}', '{{ q.correct_answer }}')" class="btn">Submit Answer</button>
+                <button onclick="resetAnswer('{{ q.id }}')" class="btn-outline">Reset</button>
+                <button id="btn-{{ q.id }}" onclick="toggleAnswer('{{ q.id }}')" class="btn-small">Show Answer</button>
+                
+                <div id="result-{{ q.id }}" class="result-box" style="display: none;"></div>
+                
+                <div id="answer-{{ q.id }}" class="answer-box" style="display: none;">
+                    <strong>Correct Answer: Option {{ q.correct_answer }}</strong>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="question-card">
+            <p>No questions found in this category.</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

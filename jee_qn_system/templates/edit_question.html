@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Edit Question</h1>
+        <div class="user-info">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn-small">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <form action="{{ url_for('edit_question', id=question.id) }}" method="post" class="question-form">
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Subject:</label>
+                    <select name="subject" required>
+                        <option value="Physics" {% if question.subject=='Physics' %}selected{% endif %}>Physics</option>
+                        <option value="Chemistry" {% if question.subject=='Chemistry' %}selected{% endif %}>Chemistry
+                        </option>
+                        <option value="Mathematics" {% if question.subject=='Mathematics' %}selected{% endif %}>
+                            Mathematics</option>
+                    </select>
+                </div>
+                <div class="form-group half">
+                    <label>Chapter:</label>
+                    <input type="text" name="chapter" required value="{{ question.chapter }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Question Text:</label>
+                <textarea name="question_text" rows="4" required>{{ question.question_text }}</textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Option A:</label>
+                    <input type="text" name="option_a" required value="{{ question.option_a }}">
+                </div>
+                <div class="form-group half">
+                    <label>Option B:</label>
+                    <input type="text" name="option_b" required value="{{ question.option_b }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Option C:</label>
+                    <input type="text" name="option_c" required value="{{ question.option_c }}">
+                </div>
+                <div class="form-group half">
+                    <label>Option D:</label>
+                    <input type="text" name="option_d" required value="{{ question.option_d }}">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Correct Answer:</label>
+                    <select name="correct_answer" required>
+                        <option value="A" {% if question.correct_answer=='A' %}selected{% endif %}>Option A</option>
+                        <option value="B" {% if question.correct_answer=='B' %}selected{% endif %}>Option B</option>
+                        <option value="C" {% if question.correct_answer=='C' %}selected{% endif %}>Option C</option>
+                        <option value="D" {% if question.correct_answer=='D' %}selected{% endif %}>Option D</option>
+                    </select>
+                </div>
+                <div class="form-group half">
+                    <label>Difficulty:</label>
+                    <select name="difficulty" required>
+                        <option value="Easy" {% if question.difficulty=='Easy' %}selected{% endif %}>Easy</option>
+                        <option value="Medium" {% if question.difficulty=='Medium' %}selected{% endif %}>Medium</option>
+                        <option value="Hard" {% if question.difficulty=='Hard' %}selected{% endif %}>Hard</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Update Question</button>
+        </form>
+    </div>
+</body>
+
+</html>

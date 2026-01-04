@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Student Dashboard</h1>
+        <div class="user-info">
+            <span>Happy Learning, {{ session['username'] }}!</span>
+            <a href="{{ url_for('logout') }}" class="btn-small btn-danger">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Start Practicing</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>All Subjects</h3>
+                <p>Practice questions from all subjects mixed together.</p>
+                <a href="{{ url_for('practice') }}" class="btn">Start Practice</a>
+            </div>
+
+            {% for subject in subjects %}
+            <div class="card">
+                <h3>{{ subject }}</h3>
+                <p>Focus on {{ subject }} questions only.</p>
+                <a href="{{ url_for('practice', subject=subject) }}" class="btn">Start {{ subject }}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Add New Question</h1>
+        <div class="user-info">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn-small">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <form action="{{ url_for('add_question') }}" method="post" class="question-form">
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Subject:</label>
+                    <select name="subject" required>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Mathematics">Mathematics</option>
+                    </select>
+                </div>
+                <div class="form-group half">
+                    <label>Chapter:</label>
+                    <input type="text" name="chapter" required placeholder="e.g. Thermodynamics">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Question Text:</label>
+                <textarea name="question_text" rows="4" required placeholder="Enter the question here..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Option A:</label>
+                    <input type="text" name="option_a" required>
+                </div>
+                <div class="form-group half">
+                    <label>Option B:</label>
+                    <input type="text" name="option_b" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Option C:</label>
+                    <input type="text" name="option_c" required>
+                </div>
+                <div class="form-group half">
+                    <label>Option D:</label>
+                    <input type="text" name="option_d" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Correct Answer:</label>
+                    <select name="correct_answer" required>
+                        <option value="A">Option A</option>
+                        <option value="B">Option B</option>
+                        <option value="C">Option C</option>
+                        <option value="D">Option D</option>
+                    </select>
+                </div>
+                <div class="form-group half">
+                    <label>Difficulty:</label>
+                    <select name="difficulty" required>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Save Question</button>
+        </form>
+    </div>
+</body>
+
+</html>
